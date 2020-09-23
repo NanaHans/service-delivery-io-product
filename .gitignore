@@ -98,3 +98,4 @@ local.properties
 .idea
 *.iml
 /logs/
+/.gitignore
