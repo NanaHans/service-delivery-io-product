@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -31,16 +30,16 @@ public class Category implements Serializable {
 	@Column(nullable = false, length = 100)
 	private String name;
 
-	// bi-directional many-to-many association to Product
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "category_product", joinColumns = {
-			@JoinColumn(name = "category_id", nullable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "product_id", nullable = false) })
-	private List<Product> products = new ArrayList<Product>();
-
 	// bi-directional many-to-many association to Supermarket
-	@ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "categories")
 	private List<Supermarket> supermarkets = new ArrayList<Supermarket>();
+
+	// bi-directional many-to-many association to Article
+	@ManyToMany
+	@JoinTable(name = "category_article", joinColumns = {
+			@JoinColumn(name = "category_id", nullable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "article_id", nullable = false) })
+	private List<Article> articles = new ArrayList<Article>();
 
 	public Category() {
 	}
@@ -61,20 +60,20 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 
-	public List<Product> getProducts() {
-		return this.products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
 	public List<Supermarket> getSupermarkets() {
-		return supermarkets;
+		return this.supermarkets;
 	}
 
 	public void setSupermarkets(List<Supermarket> supermarkets) {
 		this.supermarkets = supermarkets;
+	}
+
+	public List<Article> getArticles() {
+		return this.articles;
+	}
+
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
 	}
 
 }

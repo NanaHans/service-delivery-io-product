@@ -14,14 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.service.delivery.io.entities.Product;
+import de.service.delivery.io.entities.Article;
 import de.service.delivery.io.entities.Supermarket;
-import de.service.delivery.io.entities.SupermarketProduct;
-import de.service.delivery.io.entities.SupermarketProductPK;
+import de.service.delivery.io.entities.SupermarketArticle;
+import de.service.delivery.io.entities.SupermarketArticlePK;
 import de.service.delivery.io.enums.Category;
+import de.service.delivery.io.repositories.ArticletRepository;
 import de.service.delivery.io.repositories.CategoryRepository;
-import de.service.delivery.io.repositories.ProductRepository;
-import de.service.delivery.io.repositories.SupermarketProductPriceRepository;
+import de.service.delivery.io.repositories.SupermarketArticleRepository;
 import de.service.delivery.io.repositories.SupermarketRepository;
 import de.service.delivery.io.services.HTMLParserService;
 
@@ -35,9 +35,9 @@ public class HTMLParserImpl implements HTMLParserService {
 	@Autowired
 	private CategoryRepository categoryRepos;
 	@Autowired
-	private ProductRepository productRepos;
+	private ArticletRepository articleRepos;
 	@Autowired
-	private SupermarketProductPriceRepository supermarketProductPriceRepos;
+	private SupermarketArticleRepository supermarketProductPriceRepos;
 
 	@Override
 	public void parseHtmlFromUrl(String url) {
@@ -84,9 +84,9 @@ public class HTMLParserImpl implements HTMLParserService {
 				if (categoryRepos.findById(category.getId()).isPresent()) {
 					categoryEntity = categoryRepos.findById(category.getId()).get();
 				}
-				Product product = null;
-				if (!productRepos.findByName(productName).isEmpty()) {
-					product = productRepos.findByName(productName).stream().findFirst().get();
+				Article article = null;
+				if (!articleRepos.findByName(productName).isEmpty()) {
+					article = articleRepos.findByName(productName).stream().findFirst().get();
 				}
 
 				for (int j = 0; j < tdList.size(); j++) {
@@ -103,30 +103,30 @@ public class HTMLParserImpl implements HTMLParserService {
 						categoryEntity.setId(category.getId());
 					}
 
-					if (product == null) {
-						product = new Product();
-						product.setName(productName);
-						productRepos.save(product);
+					if (article == null) {
+						article = new Article();
+						article.setName(productName);
+						articleRepos.save(article);
 					}
 
-					categoryEntity.getProducts().add(product);
+					categoryEntity.getArticles().add(article);
 					categoryEntity.getSupermarkets().add(supermarket);
 
 //					product.getCategories().add(categoryEntity);
 //					supermarket.getCategories().add(categoryEntity);
 
-					SupermarketProductPK supermarketProductPK = new SupermarketProductPK();
-					supermarketProductPK.setProduct(product);
-					supermarketProductPK.setSupermarket(supermarket);
+					SupermarketArticlePK supermarketArticletPK = new SupermarketArticlePK();
+					supermarketArticletPK.setArticle(article);
+					supermarketArticletPK.setSupermarket(supermarket);
 
-					SupermarketProduct supermarketProduct = new SupermarketProduct();
-					supermarketProduct.setId(supermarketProductPK);
-					supermarketProduct.setPrice(new BigDecimal(price));
-					supermarketProduct.setUnit(unit);
+					SupermarketArticle supermarketArticle = new SupermarketArticle();
+					supermarketArticle.setId(supermarketArticletPK);
+					supermarketArticle.setPrice(new BigDecimal(price));
+					supermarketArticle.setUnit(unit);
 
 					categoryEntity = categoryRepos.save(categoryEntity);
 
-					supermarketProduct = supermarketProductPriceRepos.save(supermarketProduct);
+					supermarketArticle = supermarketProductPriceRepos.save(supermarketArticle);
 					supermarketId++;
 				}
 

@@ -1,68 +1,50 @@
 package de.service.delivery.io.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * The persistent class for the supermarket database table.
+ * The persistent class for the article database table.
  * 
  */
 @Entity
-@Table(name = "supermarket")
-@NamedQuery(name = "Supermarket.findAll", query = "SELECT s FROM Supermarket s")
-public class Supermarket implements Serializable {
+@Table(name = "article")
+@NamedQuery(name = "Article.findAll", query = "SELECT a FROM Article a")
+public class Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
 	private long id;
 
-	@Column(name = "last_update", nullable = false)
-	private Timestamp lastUpdate;
-
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 200)
 	private String name;
 
 	// bi-directional many-to-many association to Category
-	@ManyToMany
-	@JoinTable(name = "supermarket_category", joinColumns = {
-			@JoinColumn(name = "supermarket_id", nullable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "category_id", nullable = false) })
+	@ManyToMany(mappedBy = "articles")
 	private List<Category> categories = new ArrayList<Category>();
 
 	// bi-directional many-to-one association to SupermarketArticle
-	@OneToMany(mappedBy = "supermarket")
+	@OneToMany(mappedBy = "article")
 	private List<SupermarketArticle> supermarketArticles = new ArrayList<SupermarketArticle>();
 
-	public Supermarket() {
+	public Article() {
 	}
 
 	public long getId() {
 		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public Timestamp getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public String getName() {
@@ -91,14 +73,14 @@ public class Supermarket implements Serializable {
 
 	public SupermarketArticle addSupermarketArticle(SupermarketArticle supermarketArticle) {
 		getSupermarketArticles().add(supermarketArticle);
-		supermarketArticle.setSupermarket(this);
+		supermarketArticle.setArticle(this);
 
 		return supermarketArticle;
 	}
 
 	public SupermarketArticle removeSupermarketArticle(SupermarketArticle supermarketArticle) {
 		getSupermarketArticles().remove(supermarketArticle);
-		supermarketArticle.setSupermarket(null);
+		supermarketArticle.setArticle(null);
 
 		return supermarketArticle;
 	}

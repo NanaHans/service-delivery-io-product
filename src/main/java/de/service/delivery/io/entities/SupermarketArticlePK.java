@@ -2,29 +2,25 @@ package de.service.delivery.io.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
- * The primary key class for the supermarket_product database table.
+ * The primary key class for the supermarket_article database table.
  * 
  */
 @Embeddable
-public class SupermarketProductPK implements Serializable {
+public class SupermarketArticlePK implements Serializable {
 	// default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "supermarket_id")
+	@Column(name = "supermarket_id")
 	private Supermarket supermarket;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "product_id")
-	private Product product;
+	@Column(name = "article_id")
+	private Article article;
 
-	public SupermarketProductPK() {
+	public SupermarketArticlePK() {
 	}
 
 	public Supermarket getSupermarket() {
@@ -35,19 +31,19 @@ public class SupermarketProductPK implements Serializable {
 		this.supermarket = supermarket;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Article getArticle() {
+		return article;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		result = prime * result + ((article == null) ? 0 : article.hashCode());
 		result = prime * result + ((supermarket == null) ? 0 : supermarket.hashCode());
 		return result;
 	}
@@ -60,11 +56,11 @@ public class SupermarketProductPK implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SupermarketProductPK other = (SupermarketProductPK) obj;
-		if (product == null) {
-			if (other.product != null)
+		SupermarketArticlePK other = (SupermarketArticlePK) obj;
+		if (article == null) {
+			if (other.article != null)
 				return false;
-		} else if (!product.equals(other.product))
+		} else if (!article.equals(other.article))
 			return false;
 		if (supermarket == null) {
 			if (other.supermarket != null)
