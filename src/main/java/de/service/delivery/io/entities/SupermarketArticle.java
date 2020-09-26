@@ -6,9 +6,6 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -30,16 +27,6 @@ public class SupermarketArticle implements Serializable {
 
 	@Column(length = 50)
 	private String unit;
-
-	// bi-directional many-to-one association to Article
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "article_id", nullable = false, insertable = false, updatable = false)
-	private Article article;
-
-	// bi-directional many-to-one association to Supermarket
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "supermarket_id", nullable = false, insertable = false, updatable = false)
-	private Supermarket supermarket;
 
 	public SupermarketArticle() {
 	}
@@ -67,21 +54,4 @@ public class SupermarketArticle implements Serializable {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-
-	public Article getArticle() {
-		return this.article;
-	}
-
-	public void setArticle(Article article) {
-		this.article = article;
-	}
-
-	public Supermarket getSupermarket() {
-		return this.supermarket;
-	}
-
-	public void setSupermarket(Supermarket supermarket) {
-		this.supermarket = supermarket;
-	}
-
 }

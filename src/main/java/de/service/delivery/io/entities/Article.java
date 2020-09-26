@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,11 +35,11 @@ public class Article implements Serializable {
 	private String name;
 
 	// bi-directional many-to-many association to Category
-	@ManyToMany(mappedBy = "articles")
+	@ManyToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Category> categories = new ArrayList<Category>();
 
 	// bi-directional many-to-one association to SupermarketArticle
-	@OneToMany(mappedBy = "article")
+	@OneToMany(mappedBy = "supermarketArticlePK.article", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<SupermarketArticle> supermarketArticles = new ArrayList<SupermarketArticle>();
 
 	public Article() {
@@ -69,20 +71,6 @@ public class Article implements Serializable {
 
 	public void setSupermarketArticles(List<SupermarketArticle> supermarketArticles) {
 		this.supermarketArticles = supermarketArticles;
-	}
-
-	public SupermarketArticle addSupermarketArticle(SupermarketArticle supermarketArticle) {
-		getSupermarketArticles().add(supermarketArticle);
-		supermarketArticle.setArticle(this);
-
-		return supermarketArticle;
-	}
-
-	public SupermarketArticle removeSupermarketArticle(SupermarketArticle supermarketArticle) {
-		getSupermarketArticles().remove(supermarketArticle);
-		supermarketArticle.setArticle(null);
-
-		return supermarketArticle;
 	}
 
 }

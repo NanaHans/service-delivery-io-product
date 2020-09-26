@@ -78,8 +78,7 @@ public class HTMLParserImpl implements HTMLParserService {
 				String productName = th.text();
 
 				Elements tdList = tr.select("td");
-				int supermarketId = 1;
-				Supermarket supermarket = supermarketRepo.findById(new Long(supermarketId)).get();
+
 				de.service.delivery.io.entities.Category categoryEntity = null;
 				if (categoryRepos.findById(category.getId()).isPresent()) {
 					categoryEntity = categoryRepos.findById(category.getId()).get();
@@ -89,24 +88,32 @@ public class HTMLParserImpl implements HTMLParserService {
 					article = articleRepos.findByName(productName).stream().findFirst().get();
 				}
 
+				String price = "0";
+				String unit = "";
+				int supermarketId = 1;
 				for (int j = 0; j < tdList.size(); j++) {
+					Supermarket supermarket = supermarketRepo.findById(new Long(supermarketId)).get();
 					Elements priseGramm = tdList.get(j).getElementsByClass("small");
 					String[] priceGramSplited = priseGramm.text().split("/");
+					if (priceGramSplited.length > 1) {
+						price = priceGramSplited[0];
+						price = price.replace("€", "");
+						unit = priceGramSplited[1];
+					}
 
-					String price = "0";
-					String unit = "";
 					extractPriceGram(category, th, priceGramSplited, supermarket);
 
 					if (categoryEntity == null) {
 						categoryEntity = new de.service.delivery.io.entities.Category();
 						categoryEntity.setName(category.getName());
 						categoryEntity.setId(category.getId());
+						categoryEntity = categoryRepos.save(categoryEntity);
 					}
 
 					if (article == null) {
 						article = new Article();
 						article.setName(productName);
-						articleRepos.save(article);
+						article = articleRepos.save(article);
 					}
 
 					categoryEntity.getArticles().add(article);
@@ -121,12 +128,18 @@ public class HTMLParserImpl implements HTMLParserService {
 
 					SupermarketArticle supermarketArticle = new SupermarketArticle();
 					supermarketArticle.setId(supermarketArticletPK);
-					supermarketArticle.setPrice(new BigDecimal(price));
+					BigDecimal b = BigDecimal.valueOf(Double.parseDouble(price));
+					supermarketArticle.setPrice(b);
 					supermarketArticle.setUnit(unit);
 
-					categoryEntity = categoryRepos.save(categoryEntity);
+					article.getCategories().add(categoryEntity);
+					article.getSupermarketArticles().add(supermarketArticle);
 
-					supermarketArticle = supermarketProductPriceRepos.save(supermarketArticle);
+					articleRepos.save(article);
+
+//					categoryEntity = categoryRepos.save(categoryEntity);
+//
+//					supermarketArticle = supermarketProductPriceRepos.save(supermarketArticle);
 					supermarketId++;
 				}
 

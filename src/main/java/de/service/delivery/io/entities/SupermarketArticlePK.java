@@ -2,8 +2,10 @@ package de.service.delivery.io.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * The primary key class for the supermarket_article database table.
@@ -14,10 +16,12 @@ public class SupermarketArticlePK implements Serializable {
 	// default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "supermarket_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "supermarket_id")
 	private Supermarket supermarket;
 
-	@Column(name = "article_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "article_id")
 	private Article article;
 
 	public SupermarketArticlePK() {

@@ -1,12 +1,15 @@
 package de.service.delivery.io.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,24 +29,22 @@ public class Supermarket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
 	private long id;
-
-	@Column(name = "last_update", nullable = false)
-	private Timestamp lastUpdate;
 
 	@Column(nullable = false, length = 100)
 	private String name;
 
 	// bi-directional many-to-many association to Category
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "supermarket_category", joinColumns = {
 			@JoinColumn(name = "supermarket_id", nullable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "category_id", nullable = false) })
 	private List<Category> categories = new ArrayList<Category>();
 
 	// bi-directional many-to-one association to SupermarketArticle
-	@OneToMany(mappedBy = "supermarket")
+	@OneToMany(mappedBy = "supermarket", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<SupermarketArticle> supermarketArticles = new ArrayList<SupermarketArticle>();
 
 	public Supermarket() {
@@ -55,14 +56,6 @@ public class Supermarket implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public Timestamp getLastUpdate() {
-		return this.lastUpdate;
-	}
-
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
 	}
 
 	public String getName() {
@@ -88,19 +81,4 @@ public class Supermarket implements Serializable {
 	public void setSupermarketArticles(List<SupermarketArticle> supermarketArticles) {
 		this.supermarketArticles = supermarketArticles;
 	}
-
-	public SupermarketArticle addSupermarketArticle(SupermarketArticle supermarketArticle) {
-		getSupermarketArticles().add(supermarketArticle);
-		supermarketArticle.setSupermarket(this);
-
-		return supermarketArticle;
-	}
-
-	public SupermarketArticle removeSupermarketArticle(SupermarketArticle supermarketArticle) {
-		getSupermarketArticles().remove(supermarketArticle);
-		supermarketArticle.setSupermarket(null);
-
-		return supermarketArticle;
-	}
-
 }
