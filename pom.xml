@@ -9,12 +9,12 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>de.service.delivery.io.product</groupId>
+	<groupId>de.service.article.administrator.article</groupId>
 	<artifactId>service.delivery.io</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>service-delivery-io-product</name>
-	<description>Demo project for Spring Boot and Kotlin</description>
+	<name>service-article-administrator</name>
+	<description>Demo project for Spring</description>
 
 	<properties>
 		<java.version>1.8</java.version>

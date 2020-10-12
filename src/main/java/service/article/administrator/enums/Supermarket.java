@@ -1,4 +1,4 @@
-package de.service.delivery.io.enums;
+package service.article.administrator.enums;
 
 public enum Supermarket {
 	ALDI_SÜD(1, "Aldi Süd"), ALDI_NORD(2, "Aldi Nord"), LIDL(3, "Lidl"), REWE(4, "Rewe"), EDEKA(5, "Edeka"),

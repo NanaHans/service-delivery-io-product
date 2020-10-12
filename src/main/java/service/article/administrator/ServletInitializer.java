@@ -1,4 +1,4 @@
-package de.service.delivery.io;
+package service.article.administrator;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

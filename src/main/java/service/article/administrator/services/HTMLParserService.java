@@ -1,4 +1,4 @@
-package de.service.delivery.io.services;
+package service.article.administrator.services;
 
 public interface HTMLParserService {
 	public void parseHtmlFromUrl(String url);

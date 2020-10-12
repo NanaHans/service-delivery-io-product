@@ -1,4 +1,4 @@
-package de.service.delivery.io.services.impl;
+package service.article.administrator.services.impl;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -14,16 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.service.delivery.io.entities.Article;
-import de.service.delivery.io.entities.Supermarket;
-import de.service.delivery.io.entities.SupermarketArticle;
-import de.service.delivery.io.entities.SupermarketArticlePK;
-import de.service.delivery.io.enums.Category;
-import de.service.delivery.io.repositories.ArticletRepository;
-import de.service.delivery.io.repositories.CategoryRepository;
-import de.service.delivery.io.repositories.SupermarketArticleRepository;
-import de.service.delivery.io.repositories.SupermarketRepository;
-import de.service.delivery.io.services.HTMLParserService;
+import service.article.administrator.entities.Article;
+import service.article.administrator.entities.Supermarket;
+import service.article.administrator.entities.SupermarketArticle;
+import service.article.administrator.entities.SupermarketArticlePK;
+import service.article.administrator.enums.Category;
+import service.article.administrator.repositories.ArticletRepository;
+import service.article.administrator.repositories.CategoryRepository;
+import service.article.administrator.repositories.SupermarketArticleRepository;
+import service.article.administrator.repositories.SupermarketRepository;
+import service.article.administrator.services.HTMLParserService;
 
 @Service
 @Transactional
@@ -79,7 +79,7 @@ public class HTMLParserImpl implements HTMLParserService {
 
 				Elements tdList = tr.select("td");
 
-				de.service.delivery.io.entities.Category categoryEntity = null;
+				service.article.administrator.entities.Category categoryEntity = null;
 				if (categoryRepos.findById(category.getId()).isPresent()) {
 					categoryEntity = categoryRepos.findById(category.getId()).get();
 				}
@@ -104,7 +104,7 @@ public class HTMLParserImpl implements HTMLParserService {
 					extractPriceGram(category, th, priceGramSplited, supermarket);
 
 					if (categoryEntity == null) {
-						categoryEntity = new de.service.delivery.io.entities.Category();
+						categoryEntity = new service.article.administrator.entities.Category();
 						categoryEntity.setName(category.getName());
 						categoryEntity.setId(category.getId());
 						categoryEntity = categoryRepos.save(categoryEntity);

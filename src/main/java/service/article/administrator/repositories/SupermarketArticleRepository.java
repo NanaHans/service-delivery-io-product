@@ -1,8 +1,8 @@
-package de.service.delivery.io.repositories;
+package service.article.administrator.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import de.service.delivery.io.entities.SupermarketArticle;
+import service.article.administrator.entities.SupermarketArticle;
 
 public interface SupermarketArticleRepository extends JpaRepository<SupermarketArticle, Long> {
 

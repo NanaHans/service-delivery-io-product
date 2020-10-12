@@ -1,4 +1,4 @@
-package de.service.delivery.io.entities;
+package service.article.administrator.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,21 +11,19 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * The persistent class for the supermarket database table.
+ * The persistent class for the article database table.
  * 
  */
 @Entity
-@Table(name = "supermarket")
-@NamedQuery(name = "Supermarket.findAll", query = "SELECT s FROM Supermarket s")
-public class Supermarket implements Serializable {
+@Table(name = "article")
+@NamedQuery(name = "Article.findAll", query = "SELECT a FROM Article a")
+public class Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -33,29 +31,22 @@ public class Supermarket implements Serializable {
 	@Column(unique = true, nullable = false)
 	private long id;
 
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 200)
 	private String name;
 
 	// bi-directional many-to-many association to Category
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "supermarket_category", joinColumns = {
-			@JoinColumn(name = "supermarket_id", nullable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "category_id", nullable = false) })
+	@ManyToMany(mappedBy = "articles", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Category> categories = new ArrayList<Category>();
 
 	// bi-directional many-to-one association to SupermarketArticle
-	@OneToMany(mappedBy = "supermarketArticlePK.supermarket", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "supermarketArticlePK.article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<SupermarketArticle> supermarketArticles = new ArrayList<SupermarketArticle>();
 
-	public Supermarket() {
+	public Article() {
 	}
 
 	public long getId() {
 		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -81,4 +72,5 @@ public class Supermarket implements Serializable {
 	public void setSupermarketArticles(List<SupermarketArticle> supermarketArticles) {
 		this.supermarketArticles = supermarketArticles;
 	}
+
 }

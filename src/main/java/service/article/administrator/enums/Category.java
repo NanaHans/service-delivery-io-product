@@ -1,4 +1,4 @@
-package de.service.delivery.io.enums;
+package service.article.administrator.enums;
 
 public enum Category {
 

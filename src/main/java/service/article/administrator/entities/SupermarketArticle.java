@@ -1,4 +1,4 @@
-package de.service.delivery.io.entities;
+package service.article.administrator.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
