@@ -25,6 +25,7 @@ public class SupermarketArticlePK implements Serializable {
 	private Article article;
 
 	public SupermarketArticlePK() {
+		super();
 	}
 
 	public Supermarket getSupermarket() {

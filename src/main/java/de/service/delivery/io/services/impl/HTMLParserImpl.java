@@ -37,7 +37,7 @@ public class HTMLParserImpl implements HTMLParserService {
 	@Autowired
 	private ArticletRepository articleRepos;
 	@Autowired
-	private SupermarketArticleRepository supermarketProductPriceRepos;
+	private SupermarketArticleRepository supermarketArticleRepo;
 
 	@Override
 	public void parseHtmlFromUrl(String url) {
@@ -135,11 +135,11 @@ public class HTMLParserImpl implements HTMLParserService {
 					article.getCategories().add(categoryEntity);
 					article.getSupermarketArticles().add(supermarketArticle);
 
-					articleRepos.save(article);
+//					articleRepos.save(article);
 
 //					categoryEntity = categoryRepos.save(categoryEntity);
 //
-//					supermarketArticle = supermarketProductPriceRepos.save(supermarketArticle);
+					supermarketArticle = supermarketArticleRepo.save(supermarketArticle);
 					supermarketId++;
 				}
 
