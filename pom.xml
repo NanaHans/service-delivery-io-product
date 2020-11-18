@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.service.article.administrator.article</groupId>
-	<artifactId>service.delivery.io</artifactId>
+	<artifactId>de.service.article.administrator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>service-article-administrator</name>

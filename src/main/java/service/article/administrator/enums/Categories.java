@@ -1,6 +1,6 @@
 package service.article.administrator.enums;
 
-public enum Category {
+public enum Categories {
 
 	BROT_UND_BROETCHEN(2, "Brot & Brötchen"), SONSTIGE_BACKWAREN(3, "sonstige Backwaren"), CEREALIEN(4, "Cerealien"),
 	BROTAUFSTRICH(5, "Brotaufstrich"), KOSMETIK(6, "Kosmetik"), HYGIENEARTIKEL(7, "Hygieneartikel"),
@@ -20,7 +20,7 @@ public enum Category {
 	private long id;
 	private String name;
 
-	private Category(int id, String name) {
+	private Categories(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -41,8 +41,8 @@ public enum Category {
 		this.name = name;
 	}
 
-	public Category parseOnId(long id) {
-		for (Category category : Category.values()) {
+	public Categories parseOnId(long id) {
+		for (Categories category : Categories.values()) {
 			if (category.getId() == id) {
 				return category;
 			}

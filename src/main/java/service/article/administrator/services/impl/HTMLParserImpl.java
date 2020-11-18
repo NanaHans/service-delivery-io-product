@@ -18,7 +18,7 @@ import service.article.administrator.entities.Article;
 import service.article.administrator.entities.Supermarket;
 import service.article.administrator.entities.SupermarketArticle;
 import service.article.administrator.entities.SupermarketArticlePK;
-import service.article.administrator.enums.Category;
+import service.article.administrator.enums.Categories;
 import service.article.administrator.repositories.ArticletRepository;
 import service.article.administrator.repositories.CategoryRepository;
 import service.article.administrator.repositories.SupermarketArticleRepository;
@@ -51,7 +51,7 @@ public class HTMLParserImpl implements HTMLParserService {
 		String unescapedString = StringEscapeUtils.unescapeHtml4(htmlpage.toString());
 		Document doc = Jsoup.parse(unescapedString);
 
-		for (Category category : Category.values()) {
+		for (Categories category : Categories.values()) {
 			Element categoryElement = doc.getElementById(Long.toString(category.getId()));
 			Elements tableElements = categoryElement.nextElementSiblings();
 			for (Element element : tableElements) {
@@ -66,7 +66,7 @@ public class HTMLParserImpl implements HTMLParserService {
 
 	}
 
-	private void parseHTMLTable(Category category, Element table) {
+	private void parseHTMLTable(Categories category, Element table) {
 		Elements trList = table.select("tr");
 		for (int i = 0; i < trList.size(); i++) {
 			if (i > 0) {
@@ -148,7 +148,7 @@ public class HTMLParserImpl implements HTMLParserService {
 
 	}
 
-	private void extractPriceGram(Category category, Element th, String[] priceGramSplited, Supermarket supermarket) {
+	private void extractPriceGram(Categories category, Element th, String[] priceGramSplited, Supermarket supermarket) {
 		String price;
 		String gramm;
 		if (priceGramSplited.length > 1) {

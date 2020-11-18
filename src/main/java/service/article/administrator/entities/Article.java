@@ -39,7 +39,7 @@ public class Article implements Serializable {
 	private List<Category> categories = new ArrayList<Category>();
 
 	// bi-directional many-to-one association to SupermarketArticle
-	@OneToMany(mappedBy = "supermarketArticlePK.article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "supermarketArticlePK.article", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SupermarketArticle> supermarketArticles = new ArrayList<SupermarketArticle>();
 
 	public Article() {
